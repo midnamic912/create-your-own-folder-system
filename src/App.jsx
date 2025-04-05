@@ -1,17 +1,18 @@
 import { useState, useRef } from "react";
 import "./App.css";
 import FileSystem from "./file-system";
+import folder from "../public/folder.png";
 
 const fs = new FileSystem();
 
 function App() {
   const inputDivRef = useRef(null);
-  const [output, setOutput] = useState("");
+  const [logs, setLogs] = useState("");
 
   const validCommandsPrefixes = new Set(["CREATE", "MOVE", "DELETE", "LIST"]);
 
   const findInvalidCommand = (commands) => {
-    if (commands.length === 0) return false;
+    if (commands.length === 0) return null;
 
     const invalidCommand = commands.find((command) => {
       const prefix = command.split(" ")[0].toUpperCase();
@@ -39,7 +40,6 @@ function App() {
     e.preventDefault();
 
     const lines = e.target.innerText.split("\n").filter((line) => line !== "");
-    console.log("lines", lines);
 
     const invalidCommand = findInvalidCommand(lines);
 
@@ -59,13 +59,15 @@ function App() {
       fs.run(command);
     }
 
-    setOutput(fs.getOutput());
+    setLogs(fs.getLogs());
   };
 
   return (
     <>
       <div className="main">
-        <h1>Create Your Own Folder System! 🗂️</h1>
+        <h1>Create Your Own Folder System!&nbsp;
+          <img src={folder} alt="folder" className="folder-icon" />
+        </h1>
         <p>Please enter the command you want to run: </p>
         <div className="input-container">
           <div
@@ -76,8 +78,7 @@ function App() {
             onKeyDown={(e) => handleEnter(e)}
           />
         </div>
-
-        <div className="command-list">{output}</div>
+        <div className="command-list">{logs}</div>
       </div>
     </>
   );

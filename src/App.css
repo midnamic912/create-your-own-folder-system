@@ -46,3 +46,8 @@
   text-align: start;
   width: 55vw;
 }
+
+.folder-icon {
+  vertical-align: top;
+  height: 1em;
+}

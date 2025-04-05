@@ -92,8 +92,8 @@ export default class FileSystem {
 
     if (!targetSuccess) return;
 
-    const targetFolder = targetSuccess ? targetPayload.target : null;
-    const parentFolder = targetSuccess ? targetPayload.parent : null;
+    const targetFolder = targetPayload.target;
+    const parentFolder = targetPayload.parent;
 
     // find toPath folder
     const { success: toSuccess, payload: toPayload } = this.findFolder(
@@ -103,7 +103,7 @@ export default class FileSystem {
 
     if (!toSuccess) return;
 
-    const toFolder = toSuccess ? toPayload.target : null;
+    const toFolder = toPayload.target;
 
     toFolder.children.set(targetFolder.name, targetFolder);
     parentFolder.removeChild(targetFolder.name);
@@ -122,17 +122,17 @@ export default class FileSystem {
   }
 
   list() {
-    const output = []; // call by reference
+    const listOutput = []; // call by reference
     const topLevel = Array.from(this.root.children.values()).sort((a, b) =>
       a.name.localeCompare(b.name)
     );
     for (const child of topLevel) {
-      child.list(0, output); // call by reference
+      child.list(0, listOutput); // call by reference
     }
-    this.logs.push(...output);
+    this.logs.push(...listOutput);
   }
 
-  getOutput() {
+  getLogs() {
     return this.logs.join("\n");
   }
 }
