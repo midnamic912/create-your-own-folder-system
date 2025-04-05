@@ -1,6 +1,10 @@
-# Silvergate Assessment
-
-A React application built with Vite.
+# Create Your Own Folder System
+ 
+ A Folder system to play around.
+ 
+ Built with React, Vite and love.
+ 
+ <img width="1690" alt="image" src="https://github.com/user-attachments/assets/3d49b04b-1929-416c-9644-4902e8849195" />
 
 ## Prerequisites
 
