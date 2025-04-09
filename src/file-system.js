@@ -105,6 +105,14 @@ export default class FileSystem {
 
     const toFolder = toPayload.target;
 
+    // check if target already exists in toPath
+    if (toFolder.hasChild(targetFolder.name)) {
+      this.logs.push(
+        `Cannot move ${targetPath} - ${targetFolder.name} already exists in ${toPath}`
+      );
+      return;
+    }
+
     toFolder.children.set(targetFolder.name, targetFolder);
     parentFolder.removeChild(targetFolder.name);
   }
