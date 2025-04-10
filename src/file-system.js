@@ -9,6 +9,7 @@ export default class FileSystem {
 
   run(command) {
     this.logs.push(command);
+    this.currAction = command.split(" ")[0].toLowerCase();
     const [action, ...args] = command.split(" ");
     switch (action) {
       case "CREATE":
@@ -58,7 +59,7 @@ export default class FileSystem {
    */
   findFolder(path, targetForMsg = "") {
     // handle empty path
-    if (!path) return { success: true, payload: { found: this.root } };
+    if (!path) return { success: true, payload: { target: this.root } };
 
     const parts = path.split("/");
     let current = this.root;
@@ -83,8 +84,6 @@ export default class FileSystem {
       this.logs.push(`Cannot move ${targetPath} to itself`);
       return;
     }
-
-    this.currAction = "move";
 
     // find target and parent folders
     const { success: targetSuccess, payload: targetPayload } =
@@ -118,7 +117,6 @@ export default class FileSystem {
   }
 
   delete(path) {
-    this.currAction = "delete";
     const { success, payload } = this.findFolder(path);
 
     if (!success) return;
